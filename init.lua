@@ -1,3 +1,6 @@
+vim.wo.relativenumber = true
+vim.wo.number = true
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
@@ -17,4 +20,36 @@ vim.g.maplocalleader = "\\" -- Same for `maplocalleader`
 
 require("lazy").setup({
   "folke/which-key.nvim",
+  "navarasu/onedark.nvim",
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    config = function()
+      local configs = require "nvim-treesitter.configs"
+
+      condigs.setup({
+        ensure_installed = { "c", "c++", "lua", "rust", "python" },
+	sync_install = false,
+	highlight = { enable = true },
+	indent = { enable = true },
+      })
+    end
+  },
 })
+
+local onedark = require("onedark")
+
+onedark.setup {
+  style = "warmer",
+}
+onedark.load()
+
+require("lualine").setup {
+  options = {
+    theme = "horizon",
+  },
+}
