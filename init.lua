@@ -68,7 +68,7 @@ require("lualine").setup {
 require("mason").setup()
 
 require("mason-lspconfig").setup {
-    ensure_installed = { "rust-analyzer" },
+    -- ensure_installed = { "rust-analyzer" },
 }
 
 -- require("lspconfig").sumneko_lua.setup()
