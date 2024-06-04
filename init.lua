@@ -31,13 +31,30 @@ require("lazy").setup({
     config = function()
       local configs = require "nvim-treesitter.configs"
 
-      condigs.setup({
-        ensure_installed = { "c", "c++", "lua", "rust", "python" },
-	sync_install = false,
-	highlight = { enable = true },
-	indent = { enable = true },
+      configs.setup({
+        ensure_installed = { "c", "cpp", "lua", "rust", "python" },
+        sync_install = false,
+        highlight = { enable = true },
+        indent = { enable = true },
       })
     end
+  },
+  "williamboman/mason.nvim",
+  {
+    "nvim-tree/nvim-tree.lua",
+    version = "*",
+    lazy = false,
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+      require("nvim-tree").setup({
+        sort = { sorter = "case_sensitive" },
+        view = { width = 30 },
+        renderer = { group_empty = true },
+        filters = { dotfiles = true },
+      })
+    end,
   },
 })
 
@@ -53,3 +70,24 @@ require("lualine").setup {
     theme = "horizon",
   },
 }
+
+require("mason").setup()
+
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.python_recomended_style = 0
+vim.g.rust_recomended_style = 0
+vim.opt.tabstop = 4
+vim.opt.smartindent = false
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
+
+-- empty setup using defaults
+require("nvim-tree").setup()
+
+-- OR setup with some options
+require("nvim-tree")
